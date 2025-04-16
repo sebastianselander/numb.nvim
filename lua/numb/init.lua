@@ -125,7 +125,13 @@ function numb.on_cmdline_changed()
   local cmd_line = api.nvim_call_function("getcmdline", {})
   local winnr = api.nvim_get_current_win()
   local num_str = cmd_line:match("^([%+%-%d]+)" .. (opts.number_only and "$" or ""))
-  if num_str then
+  local is_dollar = cmd_line:match("%$")
+  if is_dollar then
+    local eof = vim.fn.line('$')
+    unpeek(winnr, false)
+    peek(winnr, eof)
+    cmd "redraw"
+  elseif num_str then
     unpeek(winnr, false)
     peek(winnr, parse_num_str(num_str))
     cmd "redraw"
