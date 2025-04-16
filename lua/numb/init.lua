@@ -1,3 +1,4 @@
+
 local numb = {}
 
 local api = vim.api
@@ -118,6 +119,11 @@ local function parse_num_str(str)
     str = current_line .. str
   end
   return load("return " .. str)()
+end
+
+function visual_range(from_line, to_line) 
+    -- USE EXTMARKS
+    -- vim.hl.range(0, 99, "DiffText", {from_line, 1}, {to_line, -1}, {})
 end
 
 function numb.on_cmdline_changed()
